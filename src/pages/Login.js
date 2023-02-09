@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import validator from 'validator';
+import { shape, func } from 'prop-types';
+
 /* import { actionOne } from '../redux/actions'; */
 
 class Login extends Component {
@@ -8,7 +10,6 @@ class Login extends Component {
     email: '',
     name: '',
     isDisable: true,
-  /*     token: '', */
   };
 
   handleChange = ({ target }) => {
@@ -27,8 +28,20 @@ class Login extends Component {
     });
   };
 
-  handleSubmit = async () => {
+  fetchApi = async (URL) => {
+    const response = await fetch(URL);
+    const data = await response.json();
+    return data;
+  };
 
+  handleSubmit = async () => {
+    const firstURL = 'https://opentdb.com/api_token.php?command=request';
+    const { token } = await this.fetchApi(firstURL);
+    localStorage.setItem('token', token);
+    /* const secondURL = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    const questions = await this.fetchApi(secondURL); */
+    const { history } = this.props;
+    history.push('/game');
   };
 
   render() {
@@ -74,5 +87,11 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: shape({
+    push: func,
+  }),
+}.isRequired;
 
 export default connect()(Login);
