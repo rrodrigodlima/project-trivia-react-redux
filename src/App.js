@@ -24,7 +24,6 @@ export default function App() {
           <Route exact path="/settings" component={ Settings } />
         </Switch>
       </BrowserRouter>
-
     </div>
   );
 }
