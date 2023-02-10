@@ -35,8 +35,8 @@ class Login extends Component {
 
   handleSubmit = async () => {
     const firstURL = 'https://opentdb.com/api_token.php?command=request';
-    const { token } = await this.fetchApi(firstURL);
-    localStorage.setItem('token', token);
+    const data = await this.fetchApi(firstURL);
+    localStorage.setItem('tokenData', JSON.stringify(data));
     /* const secondURL = `https://opentdb.com/api.php?amount=5&token=${token}`;
     const questions = await this.fetchApi(secondURL); */
     const { history, dispatch } = this.props;
