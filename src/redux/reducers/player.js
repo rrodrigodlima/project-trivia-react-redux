@@ -1,4 +1,4 @@
-import { ADD_USER } from '../actions';
+import { ADD_POINTS, ADD_USER } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -14,6 +14,11 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       ...state,
       gravatarEmail: action.payload.email,
       name: action.payload.name,
+    };
+  case ADD_POINTS:
+    return {
+      ...state,
+      score: state.score + action.payload,
     };
   default:
     return state;

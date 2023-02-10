@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
+import { addPoints } from '../redux/actions';
 import { randomizeAnswers } from '../services/gameFunctions';
 import styles from './Game.module.css';
 
@@ -13,6 +15,7 @@ class Game extends Component {
     display: false,
     timeIsUp: false,
     counter: 30,
+    difficulty: '',
   };
 
   componentDidMount() {
@@ -59,11 +62,25 @@ class Game extends Component {
         questions: questionsJson.results,
         isFetched: true,
         shuffledAnswers: randomizeAnswers(questionsJson.results[0]),
+        difficulty: questionsJson.results[0].difficulty,
       });
     }
   };
 
-  handleClick = () => {
+  handleClick = ({ target: { name } }) => {
+    const { difficulty, counter } = this.state;
+    const { dispatch } = this.props;
+    const base = 10;
+    const modifier = {
+      easy: 1,
+      medium: 2,
+      hard: 3,
+    };
+    if (name) {
+      const points = base + (counter * modifier[difficulty]);
+      dispatch(addPoints(points));
+      console.log(points);
+    }
     this.setState({
       display: true,
     });
@@ -105,6 +122,8 @@ class Game extends Component {
                     <button
                       disabled={ timeIsUp }
                       key={ index }
+                      name={ shuffledAnswers.correct === index
+                        && ('correct') }
                       data-testid={ shuffledAnswers.correct === index
                         ? ('correct-answer') : (`wrong-answer-${index}`) }
                       onClick={ this.handleClick }
@@ -123,9 +142,14 @@ class Game extends Component {
 }
 
 Game.propTypes = {
+  dispatch: PropTypes.func,
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
 }.isRequired;
 
-export default Game;
+const mapStateToProps = (state) => ({
+  score: state.player.score,
+});
+
+export default connect(mapStateToProps)(Game);
