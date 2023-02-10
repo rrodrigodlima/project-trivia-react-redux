@@ -1,9 +1,9 @@
 .correctButton {
-    border: solid rgb(6, 240, 15);
-    border-width: 3px;
+  border: solid rgb(6, 240, 15);
+  border-width: 3px;
 }
 
 .wrongButton {
-    border: solid red;
-    border-width: 3px;
+  border: solid red;
+  border-width: 3px;
 }
