@@ -11,6 +11,8 @@ class Game extends Component {
     isFetched: false,
     shuffledAnswers: [],
     display: false,
+    timeIsUp: false,
+    counter: 30,
   };
 
   componentDidMount() {
@@ -18,7 +20,29 @@ class Game extends Component {
     this.setState({
       display: false,
     });
+    this.counter();
   }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
+  }
+
+  counter = () => {
+    const interval = 1000;
+    this.intervalId = setInterval(() => {
+      this.setState((state) => {
+        if (state.counter === 1) {
+          this.setState({
+            timeIsUp: true,
+          });
+          clearInterval(this.intervalId);
+        }
+        return {
+          counter: state.counter - 1,
+        };
+      });
+    }, interval);
+  };
 
   handleApi = async () => {
     const { history } = this.props;
@@ -46,11 +70,20 @@ class Game extends Component {
   };
 
   render() {
-    const { questions, count, isFetched, shuffledAnswers, display } = this.state;
-    console.log(shuffledAnswers);
+    const {
+      questions,
+      count,
+      isFetched,
+      shuffledAnswers,
+      display,
+      timeIsUp,
+      counter,
+    } = this.state;
+
     return (
       <div>
         <Header />
+        {counter}
         {isFetched
           && (
             <div>
@@ -70,6 +103,7 @@ class Game extends Component {
                 {
                   shuffledAnswers.answers.map((element, index) => (
                     <button
+                      disabled={ timeIsUp }
                       key={ index }
                       data-testid={ shuffledAnswers.correct === index
                         ? ('correct-answer') : (`wrong-answer-${index}`) }
