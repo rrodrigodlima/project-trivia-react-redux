@@ -15,25 +15,18 @@ class Game extends Component {
     this.handleApi();
   }
 
-  /*   componentDidUpdate() {
-    const { count } = this.state;
-    const newValue = count + 1;
-    this.setState({
-      count: newValue,
-    });
-  }
-*/
-
   handleApi = async () => {
     const { history } = this.props;
-    const token = JSON.parse(localStorage.getItem('tokenData'));
-    if (token.response_code !== 0) {
+    const token = localStorage.getItem('token');
+    const questions = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+    const questionsJson = await questions.json();
+    const responseCode = questionsJson.response_code;
+    console.log(questionsJson);
+
+    if (responseCode !== 0) {
       localStorage.clear();
       history.push('/');
     } else {
-      const questions = await fetch(`https://opentdb.com/api.php?amount=5&token=${token.token}`);
-      const questionsJson = await questions.json();
-      console.log(questionsJson);
       this.setState({
         questions: questionsJson.results,
         isFetched: true,
@@ -61,6 +54,22 @@ class Game extends Component {
               >
                 {questions[count].question}
               </span>
+              <div
+                data-testid="answer-options"
+              >
+                {
+                  shuffledAnswers.answers.map((element, index) => (
+                    <button
+                      key={ index }
+                      data-testid={ shuffledAnswers.correct === index
+                        ? ('correct-answer') : (`wrong-answer-${index}`) }
+                      /* onClick={ () => console.log(shuffledAnswers.correct === index) } */
+                    >
+                      {element}
+                    </button>
+                  ))
+                }
+              </div>
             </div>)}
       </div>
     );
