@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import { randomizeAnswers } from '../services/gameFunctions';
+import styles from './Game.module.css';
 
 class Game extends Component {
   state = {
@@ -9,10 +10,14 @@ class Game extends Component {
     count: 0,
     isFetched: false,
     shuffledAnswers: [],
+    display: false,
   };
 
   componentDidMount() {
     this.handleApi();
+    this.setState({
+      display: false,
+    });
   }
 
   handleApi = async () => {
@@ -21,7 +26,6 @@ class Game extends Component {
     const questions = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const questionsJson = await questions.json();
     const responseCode = questionsJson.response_code;
-    console.log(questionsJson);
 
     if (responseCode !== 0) {
       localStorage.clear();
@@ -35,8 +39,14 @@ class Game extends Component {
     }
   };
 
+  handleClick = () => {
+    this.setState({
+      display: true,
+    });
+  };
+
   render() {
-    const { questions, count, isFetched, shuffledAnswers } = this.state;
+    const { questions, count, isFetched, shuffledAnswers, display } = this.state;
     console.log(shuffledAnswers);
     return (
       <div>
@@ -63,7 +73,9 @@ class Game extends Component {
                       key={ index }
                       data-testid={ shuffledAnswers.correct === index
                         ? ('correct-answer') : (`wrong-answer-${index}`) }
-                      /* onClick={ () => console.log(shuffledAnswers.correct === index) } */
+                      onClick={ this.handleClick }
+                      className={ display && (shuffledAnswers.correct === index
+                        ? styles.correctButton : styles.wrongButton) }
                     >
                       {element}
                     </button>
