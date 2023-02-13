@@ -79,11 +79,27 @@ class Game extends Component {
     if (name) {
       const points = base + (counter * modifier[difficulty]);
       dispatch(addPoints(points));
-      console.log(points);
     }
     this.setState({
       display: true,
     });
+  };
+
+  handleNext = () => {
+    const four = 4;
+    const { history } = this.props;
+    const { count, questions } = this.state;
+    if (count === four) {
+      history.push('/feedback');
+    } else {
+      this.setState({
+        shuffledAnswers: randomizeAnswers(questions[count + 1]),
+        difficulty: questions[count + 1].difficulty,
+        count: count + 1,
+        counter: 30,
+        display: false,
+      });
+    }
   };
 
   render() {
@@ -96,7 +112,6 @@ class Game extends Component {
       timeIsUp,
       counter,
     } = this.state;
-
     return (
       <div>
         <Header />
@@ -136,6 +151,17 @@ class Game extends Component {
                 }
               </div>
             </div>)}
+        {display && (
+          <button
+            data-testid="btn-next"
+            type="button"
+            onClick={ this.handleNext }
+          >
+            Next
+
+          </button>
+        )}
+
       </div>
     );
   }
