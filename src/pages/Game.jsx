@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import { addPoints } from '../redux/actions';
+import { addPoints, addCorrectChoices } from '../redux/actions';
 import { randomizeAnswers } from '../services/gameFunctions';
 import styles from './Game.module.css';
 
@@ -16,6 +16,7 @@ class Game extends Component {
     timeIsUp: false,
     counter: 30,
     difficulty: '',
+    correctChoices: 0,
   };
 
   componentDidMount() {
@@ -68,7 +69,7 @@ class Game extends Component {
   };
 
   handleClick = ({ target: { name } }) => {
-    const { difficulty, counter } = this.state;
+    const { difficulty, counter, correctChoices } = this.state;
     const { dispatch } = this.props;
     const base = 10;
     const modifier = {
@@ -79,6 +80,9 @@ class Game extends Component {
     if (name) {
       const points = base + (counter * modifier[difficulty]);
       dispatch(addPoints(points));
+      this.setState({
+        correctChoices: correctChoices + 1,
+      }, () => dispatch(addCorrectChoices(correctChoices)));
     }
     this.setState({
       display: true,
@@ -176,6 +180,7 @@ Game.propTypes = {
 
 const mapStateToProps = (state) => ({
   score: state.player.score,
+  correctChoices: state.player.correctChoices,
 });
 
 export default connect(mapStateToProps)(Game);
