@@ -2,7 +2,6 @@ import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux'
 import App from '../App'
 import userEvent from '@testing-library/user-event';
 import { cleanup, waitFor } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 
 const { click, type } = userEvent;
 afterEach(cleanup);
@@ -12,6 +11,7 @@ test('Cobertura de 90% da page Feedback', async () =>{
     getByText,
     getByTestId,
     getAllByTestId,
+    getByAltText,
     history,
   } = renderWithRouterAndRedux(<App />);
 
@@ -60,4 +60,10 @@ test('Cobertura de 90% da page Feedback', async () =>{
     click(rankingButton);
     expect(global.window.location.pathname).toBe('/ranking');
   });
+  const playerPicture = getByAltText('Robson');
+  expect(playerPicture).toHaveAttribute('src', 'https://www.gravatar.com/avatar/ab99af4b3cb77861d5a5ee2a01d6b5d2');
+
+  const goBack = getByText('Voltar para o início');
+  click(goBack);
+  expect(global.window.location.pathname).toBe('/');
 });

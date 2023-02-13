@@ -6,6 +6,7 @@ export default class Ranking extends Component {
   getProfilePicture = (gravatarEmail) => {
     const emailHash = md5(gravatarEmail.toLowerCase().trim()).toString();
     const stringGravatar = `https://www.gravatar.com/avatar/${emailHash}`;
+    console.log(stringGravatar);
     return stringGravatar;
   };
 
@@ -20,7 +21,7 @@ export default class Ranking extends Component {
             .map((player, index) => (
               <div key={ player.name }>
                 <img
-                  src={ () => this.getProfilePicture(player.gravatarEmail) }
+                  src={ this.getProfilePicture(player.gravatarEmail) }
                   alt={ player.name }
                 />
                 <p
