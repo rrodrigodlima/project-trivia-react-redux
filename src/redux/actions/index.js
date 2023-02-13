@@ -1,6 +1,12 @@
-export const ACTION_ONE = 'ACTION_ONE';
+export const ADD_USER = 'ADD_USER';
+export const ADD_POINTS = 'ADD_POINTS';
 
-export const actionOne = (element) => ({
-  type: ACTION_ONE,
-  payload: element,
+export const addUser = (user) => ({
+  type: ADD_USER,
+  payload: user,
+});
+
+export const addPoints = (points) => ({
+  type: ADD_POINTS,
+  payload: points,
 });

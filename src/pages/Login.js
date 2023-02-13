@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import validator from 'validator';
 import { shape, func } from 'prop-types';
-
-/* import { actionOne } from '../redux/actions'; */
+import { addUser } from '../redux/actions';
 
 class Login extends Component {
   state = {
@@ -36,11 +35,11 @@ class Login extends Component {
 
   handleSubmit = async () => {
     const firstURL = 'https://opentdb.com/api_token.php?command=request';
-    const { token } = await this.fetchApi(firstURL);
-    localStorage.setItem('token', token);
-    /* const secondURL = `https://opentdb.com/api.php?amount=5&token=${token}`;
-    const questions = await this.fetchApi(secondURL); */
-    const { history } = this.props;
+    const data = await this.fetchApi(firstURL);
+    localStorage.setItem('token', data.token);
+    const { history, dispatch } = this.props;
+    const { name, email } = this.state;
+    dispatch(addUser({ name, email }));
     history.push('/game');
   };
 
