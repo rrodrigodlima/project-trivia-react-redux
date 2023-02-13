@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import { addPoints, addCorrectChoices } from '../redux/actions';
+import { addPoints, addAssertions } from '../redux/actions';
 import { randomizeAnswers } from '../services/gameFunctions';
 import styles from './Game.module.css';
 
@@ -16,7 +16,7 @@ class Game extends Component {
     timeIsUp: false,
     counter: 30,
     difficulty: '',
-    correctChoices: 0,
+    assertions: 0,
   };
 
   componentDidMount() {
@@ -69,7 +69,7 @@ class Game extends Component {
   };
 
   handleClick = ({ target: { name } }) => {
-    const { difficulty, counter, correctChoices } = this.state;
+    const { difficulty, counter, assertions } = this.state;
     const { dispatch } = this.props;
     const base = 10;
     const modifier = {
@@ -81,8 +81,8 @@ class Game extends Component {
       const points = base + (counter * modifier[difficulty]);
       dispatch(addPoints(points));
       this.setState({
-        correctChoices: correctChoices + 1,
-      }, () => dispatch(addCorrectChoices(correctChoices)));
+        assertions: assertions + 1,
+      }, () => dispatch(addAssertions(assertions)));
     }
     this.setState({
       display: true,
@@ -180,7 +180,7 @@ Game.propTypes = {
 
 const mapStateToProps = (state) => ({
   score: state.player.score,
-  correctChoices: state.player.correctChoices,
+  assertions: state.player.assertions,
 });
 
 export default connect(mapStateToProps)(Game);

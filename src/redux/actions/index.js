@@ -1,6 +1,6 @@
 export const ADD_USER = 'ADD_USER';
 export const ADD_POINTS = 'ADD_POINTS';
-export const ADD_CORRECT_CHOICES = 'ADD_CORRECT_CHOICES';
+export const ADD_ASSERTIONS = 'ADD_ASSERTIONS';
 
 export const addUser = (user) => ({
   type: ADD_USER,
@@ -12,7 +12,7 @@ export const addPoints = (points) => ({
   payload: points,
 });
 
-export const addCorrectChoices = (correctChoices) => ({
-  type: ADD_CORRECT_CHOICES,
-  payload: correctChoices,
+export const addAssertions = (assertions) => ({
+  type: ADD_ASSERTIONS,
+  payload: assertions,
 });

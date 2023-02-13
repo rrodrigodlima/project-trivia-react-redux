@@ -1,11 +1,10 @@
-import { ADD_CORRECT_CHOICES, ADD_POINTS, ADD_USER } from '../actions';
+import { ADD_ASSERTIONS, ADD_POINTS, ADD_USER } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
-  assertions: '',
+  assertions: 0,
   score: 0,
   gravatarEmail: '',
-  correctChoices: 0,
 };
 
 const playerReducer = (state = INITIAL_STATE, action) => {
@@ -21,10 +20,10 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       ...state,
       score: state.score + action.payload,
     };
-  case ADD_CORRECT_CHOICES:
+  case ADD_ASSERTIONS:
     return {
       ...state,
-      correctChoices: action.payload + 1,
+      assertions: action.payload + 1,
     };
   default:
     return state;
