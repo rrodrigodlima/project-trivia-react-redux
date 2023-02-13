@@ -4,14 +4,8 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 
 class Feedback extends Component {
-  handleClick = () => {
-    console.log('oi');
-    const { history } = this.props;
-    history.push('/');
-  };
-
   render() {
-    const { score, assertions } = this.props;
+    const { score, assertions, history } = this.props;
     return (
       <div>
         <Header />
@@ -27,9 +21,16 @@ class Feedback extends Component {
         <button
           type="button"
           data-testid="btn-play-again"
-          onClick={ this.handleClick }
+          onClick={ () => history.push('/') }
         >
           Play Again
+        </button>
+        <button
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ () => history.push('/ranking') }
+        >
+          Ranking
         </button>
       </div>
     );
