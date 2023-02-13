@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import validator from 'validator';
 import { shape, func } from 'prop-types';
-import { addUser } from '../redux/actions';
+import { addUser, resetPoints } from '../redux/actions';
 
 class Login extends Component {
   state = {
@@ -10,6 +10,11 @@ class Login extends Component {
     name: '',
     isDisable: true,
   };
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(resetPoints());
+  }
 
   handleChange = ({ target }) => {
     const { name, value } = target;
