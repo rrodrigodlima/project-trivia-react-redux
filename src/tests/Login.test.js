@@ -6,7 +6,7 @@ import { act } from 'react-dom/test-utils';
 
 afterEach(cleanup);
 
-test('Cobertura de 90% da Page Login', async () =>{
+test('Cobertura de 90% da page Login', async () =>{
   const {
     getByText,
     getByTestId,
@@ -22,6 +22,7 @@ test('Cobertura de 90% da Page Login', async () =>{
   userEvent.click(emailInput);
   userEvent.type(emailInput, 'claudio@trybe.com');
   userEvent.click(buttonPlay);
+  expect(buttonPlay).toBeInTheDocument();
   await waitFor(() =>{
     expect(global.window.location.pathname).toBe('/game');
   });

@@ -86,7 +86,9 @@ class Game extends Component {
     }
     this.setState({
       display: true,
+      timeIsUp: true,
     });
+    clearInterval(this.intervalId);
   };
 
   handleNext = () => {
@@ -102,7 +104,9 @@ class Game extends Component {
         count: count + 1,
         counter: 30,
         display: false,
+        timeIsUp: false,
       });
+      this.counter();
     }
   };
 
@@ -139,15 +143,18 @@ class Game extends Component {
                 {
                   shuffledAnswers.answers.map((element, index) => (
                     <button
-                      disabled={ timeIsUp }
+                      disabled={ timeIsUp || display }
                       key={ index }
                       name={ shuffledAnswers.correct === index
                         && ('correct') }
                       data-testid={ shuffledAnswers.correct === index
                         ? ('correct-answer') : (`wrong-answer-${index}`) }
                       onClick={ this.handleClick }
-                      className={ display && (shuffledAnswers.correct === index
-                        ? styles.correctButton : styles.wrongButton) }
+                      className={
+                        (timeIsUp || display)
+                          && (shuffledAnswers.correct === index
+                            ? styles.correctButton : styles.wrongButton)
+                      }
                     >
                       {element}
                     </button>
@@ -155,7 +162,7 @@ class Game extends Component {
                 }
               </div>
             </div>)}
-        {display && (
+        {(timeIsUp || display) && (
           <button
             data-testid="btn-next"
             type="button"
