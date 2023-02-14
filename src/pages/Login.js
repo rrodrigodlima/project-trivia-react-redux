@@ -4,8 +4,7 @@ import validator from 'validator';
 import { shape, func } from 'prop-types';
 import { addUser, resetPoints } from '../redux/actions';
 import '../styles/login.scss';
-// import logo from '../background_login.svg';
-import logo from '../logoTrivia.svg';
+// import logo from '../logoTrivia.svg';
 
 class Login extends Component {
   state = {
@@ -63,7 +62,12 @@ class Login extends Component {
 
     return (
       <div className="login">
-        <img src={ logo } alt="logo" />
+        {/* <img src={ logo } alt="logo" /> */}
+        <h1 id="title">
+          Project
+          <br />
+          Trivia
+        </h1>
         <form>
 
           <label htmlFor="input-name">
