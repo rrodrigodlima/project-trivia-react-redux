@@ -1,0 +1,45 @@
+.setting {
+    height: 100vh;
+    background-image: url(../background_ranking.svg); 
+    background-size: cover;
+    
+    .logo{
+        width: 200px;
+        margin: 10px
+    }
+    
+    
+    .box {
+        width: 35%;
+        min-width: 350px;
+        height: 60%;
+        align-items: center;
+        justify-content: space-evenly;
+
+        h1{
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        button {
+            width: 300px;
+            margin-top: 20px;
+        }
+
+       
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .setting {
+        .box {
+            min-width: 300px;
+
+            button, select{
+                width: 250px;
+            }
+        }
+    }
+ }
+
