@@ -1,3 +1,5 @@
+
+
 .login {
     height: 100vh;
     background-image: url(../background_login.svg); 
@@ -6,6 +8,9 @@
     align-items: center;
     flex-direction: column;
     justify-content: flex-end;
+    font-size:20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color:antiquewhite;
 
     img{
         width: 20%;
@@ -13,25 +18,32 @@
     }
 
     form{
-        
+        display: flex;
+        flex-direction: column;
         align-items: center;
-        background-color: white;
-        width: 40%;
+        background-color: rgb(80, 132, 124);
+        width: 30%;
         min-width: 250px;
         min-height: 250px;
         height: 30%;
         margin: 10px;
         border-radius: 8px;
-        justify-content: center;
-
+        justify-content:space-around;
+        box-shadow: 05px 05px 05px 02px rgba(14, 1, 1, 0.763);
+        
         input{
-            width: 80%;
-            margin-bottom: 20px;
+            width: 500px;
+           
         }
 
         button {
-            width: 80%;
+            width: 20%;
+            font-size: large;
+            border-radius: 5% ;
+            border: none;
+            
         }
+
 
     }
 }
