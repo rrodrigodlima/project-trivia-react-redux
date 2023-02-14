@@ -9,7 +9,9 @@ afterEach(cleanup);
 test('Cobertura de 90% da page Feedback', async () =>{
   const {
     getByText,
+    findByText,
     getByTestId,
+    findByTestId,
     getAllByTestId,
     getByAltText,
     history,
@@ -23,17 +25,17 @@ test('Cobertura de 90% da page Feedback', async () =>{
   click(emailInput);
   type(emailInput, 'claudio@trybe.com');
   click(buttonPlay);
+  for (let index = 0; index < 5; index += 1) {
+    const correctAnswer = await findByTestId('correct-answer', {}, {timeout:4000});
+    click(correctAnswer);
+    const nextButton = await findByText('Next', {}, {timeout:4000});
+    click(nextButton);
+  }
+  const againButton = await findByText('Play Again', {}, {timeout:4000});
+  click(againButton);
   await waitFor(() =>{
-    for (let index = 0; index < 5; index += 1) {
-      const correctAnswer = getByTestId('correct-answer');
-      click(correctAnswer);
-      const nextButton = getByText('Next');
-      click(nextButton);
-    }
-    const againButton = getByText('Play Again');
-    click(againButton);
     expect(global.window.location.pathname).toBe('/');
-  });
+  }, {timeout:4000});
 
   nameInput = getByText('Nome:');
   emailInput = getByText('Email:');
