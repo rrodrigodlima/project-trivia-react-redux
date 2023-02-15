@@ -75,6 +75,13 @@
             position:relative;
             top:1px;
           }
+          .answer-button:disabled {
+            box-shadow: none;
+            background: none;
+            background-color:#4f4e50;
+            border: 1px solid #4f4e50;
+            cursor: default;
+          }
         }
     }
 }
