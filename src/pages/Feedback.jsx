@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import '../styles/feedback.scss';
 
 class Feedback extends Component {
   componentDidMount() {
@@ -18,7 +19,7 @@ class Feedback extends Component {
   render() {
     const { score, assertions, history } = this.props;
     return (
-      <div>
+      <div className="feedback">
         <Header />
         <p data-testid="feedback-text">
           {
@@ -27,8 +28,14 @@ class Feedback extends Component {
               : 'Could be better...'
           }
         </p>
-        <p data-testid="feedback-total-score">{score}</p>
-        <p data-testid="feedback-total-question">{assertions}</p>
+        <div>
+          <p>Final Score: </p>
+          <p data-testid="feedback-total-score">{score}</p>
+        </div>
+        <div>
+          <p>Correct Answers: </p>
+          <p data-testid="feedback-total-question">{assertions}</p>
+        </div>
         <button
           type="button"
           data-testid="btn-play-again"

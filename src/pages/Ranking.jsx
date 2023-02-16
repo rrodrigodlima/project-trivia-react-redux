@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 import React, { Component } from 'react';
+import '../styles/ranking.scss';
 
 export default class Ranking extends Component {
   getProfilePicture = (gravatarEmail) => {
@@ -14,7 +15,7 @@ export default class Ranking extends Component {
     const { history } = this.props;
     const playerRanking = JSON.parse(localStorage.getItem('ranking'));
     return (
-      <div>
+      <div className="ranking">
         <h2 data-testid="ranking-title">Ranking</h2>
         {
           playerRanking.sort((a, b) => b.score - a.score)
