@@ -2,8 +2,9 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import { addPoints } from '../redux/actions';
+import { addPoints, addAssertions } from '../redux/actions';
 import { randomizeAnswers } from '../services/gameFunctions';
+import '../styles/game.scss';
 import styles from './Game.module.css';
 
 class Game extends Component {
@@ -16,6 +17,7 @@ class Game extends Component {
     timeIsUp: false,
     counter: 30,
     difficulty: '',
+    assertions: 0,
   };
 
   componentDidMount() {
@@ -68,7 +70,7 @@ class Game extends Component {
   };
 
   handleClick = ({ target: { name } }) => {
-    const { difficulty, counter } = this.state;
+    const { difficulty, counter, assertions } = this.state;
     const { dispatch } = this.props;
     const base = 10;
     const modifier = {
@@ -79,10 +81,15 @@ class Game extends Component {
     if (name) {
       const points = base + (counter * modifier[difficulty]);
       dispatch(addPoints(points));
+      this.setState({
+        assertions: assertions + 1,
+      }, () => dispatch(addAssertions(assertions)));
     }
     this.setState({
       display: true,
+      timeIsUp: true,
     });
+    clearInterval(this.intervalId);
   };
 
   handleNext = () => {
@@ -98,7 +105,9 @@ class Game extends Component {
         count: count + 1,
         counter: 30,
         display: false,
+        timeIsUp: false,
       });
+      this.counter();
     }
   };
 
@@ -113,12 +122,12 @@ class Game extends Component {
       counter,
     } = this.state;
     return (
-      <div>
+      <div className="game">
         <Header />
         {counter}
         {isFetched
           && (
-            <div>
+            <div className="question">
               <span
                 data-testid="question-category"
               >
@@ -131,19 +140,23 @@ class Game extends Component {
               </span>
               <div
                 data-testid="answer-options"
+                id="answer-options"
               >
                 {
                   shuffledAnswers.answers.map((element, index) => (
                     <button
-                      disabled={ timeIsUp }
+                      disabled={ timeIsUp || display }
                       key={ index }
                       name={ shuffledAnswers.correct === index
                         && ('correct') }
                       data-testid={ shuffledAnswers.correct === index
                         ? ('correct-answer') : (`wrong-answer-${index}`) }
                       onClick={ this.handleClick }
-                      className={ display && (shuffledAnswers.correct === index
-                        ? styles.correctButton : styles.wrongButton) }
+                      className={ display ? (
+                        timeIsUp
+                        && (shuffledAnswers.correct === index
+                          ? styles.correctButton : styles.wrongButton)
+                      ) : 'answer-button' }
                     >
                       {element}
                     </button>
@@ -151,16 +164,16 @@ class Game extends Component {
                 }
               </div>
             </div>)}
-        {display && (
-          <button
-            data-testid="btn-next"
-            type="button"
-            onClick={ this.handleNext }
-          >
-            Next
 
-          </button>
-        )}
+        <button
+          data-testid={ (timeIsUp || display) && 'btn-next' }
+          className={ (timeIsUp || display) ? styles.nextButton : styles.hiddenButton }
+          type="button"
+          onClick={ this.handleNext }
+        >
+          Next
+
+        </button>
 
       </div>
     );
@@ -176,6 +189,7 @@ Game.propTypes = {
 
 const mapStateToProps = (state) => ({
   score: state.player.score,
+  assertions: state.player.assertions,
 });
 
 export default connect(mapStateToProps)(Game);

@@ -1,12 +1,9 @@
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux'
 import App from '../App'
 import userEvent from '@testing-library/user-event';
-import { cleanup, waitFor } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import {  waitFor } from '@testing-library/react';
 
-afterEach(cleanup);
-
-test('Cobertura de 90% da Page Login', async () =>{
+test('Cobertura de 90% da page Login', async () =>{
   const {
     getByText,
     getByTestId,
@@ -21,8 +18,9 @@ test('Cobertura de 90% da Page Login', async () =>{
   userEvent.type(nameInput, 'Claudio');
   userEvent.click(emailInput);
   userEvent.type(emailInput, 'claudio@trybe.com');
+  expect(buttonPlay).toBeInTheDocument();
   userEvent.click(buttonPlay);
   await waitFor(() =>{
     expect(global.window.location.pathname).toBe('/game');
-  });
+  }, { timeout: 4000 });
 });

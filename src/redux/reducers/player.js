@@ -1,8 +1,8 @@
-import { ADD_POINTS, ADD_USER } from '../actions';
+import { ADD_ASSERTIONS, ADD_POINTS, ADD_USER, RESET_POINTS } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
-  assertions: '',
+  assertions: 0,
   score: 0,
   gravatarEmail: '',
 };
@@ -19,6 +19,16 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       score: state.score + action.payload,
+    };
+  case RESET_POINTS:
+    return {
+      ...state,
+      score: 0,
+    };
+  case ADD_ASSERTIONS:
+    return {
+      ...state,
+      assertions: action.payload + 1,
     };
   default:
     return state;

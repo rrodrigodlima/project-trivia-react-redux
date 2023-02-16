@@ -1,0 +1,87 @@
+.game {
+  height: 100vh;
+  background-image: url(../background_login.svg); 
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-size:20px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: white;
+
+    // img {
+    //   width: 20%;
+    //   min-width: 200px;
+    // }
+
+    .question {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgb(80, 132, 124);
+      width: 30%;
+      min-width: 250px;
+      min-height: 250px;
+      height: 40%;
+      margin: 10px;
+      border-radius: 8px;
+      justify-content:space-around;
+      box-shadow: 05px 05px 05px 02px rgba(14, 1, 1, 0.763);
+        
+        input {
+          width: 500px;
+          padding: 5px;
+          font-size: 18px;
+          border-width: 1px;
+          border-color: #CCCCCC;
+          background-color: #FFFFFF;
+          color: #000000;
+          border-style: solid;
+          border-radius: 20px;
+          box-shadow: 0px 0px 5px rgba(66,66,66,.75);
+        }
+
+        #answer-options {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          // border: 1px solid purple;
+          min-height: 200px;
+          .answer-button {
+            // width: 20%;
+            font-size: 20px;
+            border-radius: 5% ;
+            border: none;
+            box-shadow:inset 0px 1px 0px 0px #efdcfb;
+            background:linear-gradient(to bottom, #dfbdfa 5%, #bc80ea 100%);
+            background-color:#dfbdfa;
+            border-radius:6px;
+            border:1px solid #c584f3;
+            display:inline-block;
+            cursor:pointer;
+            color:#ffffff;
+            font-family:Arial;
+            font-weight:bold;
+            padding:6px;
+            text-decoration:none;
+            text-shadow:0px 1px 0px #9752cc;
+          }
+          .answer-button:hover {
+            background:linear-gradient(to bottom, #bc80ea 5%, #dfbdfa 100%);
+            background-color:#bc80ea;
+          }
+          .answer-button:enabled:active {
+            position:relative;
+            top:1px;
+          }
+          .answer-button:disabled {
+            box-shadow: none;
+            background: none;
+            background-color:#4f4e50;
+            border: 1px solid #4f4e50;
+            cursor: default;
+          }
+        }
+    }
+}

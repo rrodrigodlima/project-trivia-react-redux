@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import validator from 'validator';
 import { shape, func } from 'prop-types';
-import { addUser } from '../redux/actions';
+import { addUser, resetPoints } from '../redux/actions';
+import '../styles/login.scss';
+// import logo from '../logoTrivia.svg';
 
 class Login extends Component {
   state = {
@@ -10,6 +12,11 @@ class Login extends Component {
     name: '',
     isDisable: true,
   };
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(resetPoints());
+  }
 
   handleChange = ({ target }) => {
     const { name, value } = target;
@@ -54,45 +61,54 @@ class Login extends Component {
     } = this.props;
 
     return (
-      <form>
-        <label htmlFor="input-name">
-          Nome:
-          <input
-            id="input-name"
-            type="text"
-            name="name"
-            value={ name }
-            data-testid="input-player-name"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="input-email">
-          Email:
-          <input
-            id="input-email"
-            type="text"
-            name="email"
-            value={ email }
-            data-testid="input-gravatar-email"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <button
-          type="button"
-          onClick={ this.handleSubmit }
-          data-testid="btn-play"
-          disabled={ isDisable }
-        >
-          Play
-        </button>
-        <button
-          type="button"
-          onClick={ () => history.push('/settings') }
-          data-testid="btn-settings"
-        >
-          Settings
-        </button>
-      </form>
+      <div className="login">
+        {/* <img src={ logo } alt="logo" /> */}
+        <h1 id="title">
+          Project
+          <br />
+          Trivia
+        </h1>
+        <form>
+
+          <label htmlFor="input-name">
+            <h3>Nome:</h3>
+            <input
+              id="input-name"
+              type="text"
+              name="name"
+              value={ name }
+              data-testid="input-player-name"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <label htmlFor="input-email">
+            <h3>Email:</h3>
+            <input
+              id="input-email"
+              type="text"
+              name="email"
+              value={ email }
+              data-testid="input-gravatar-email"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <button
+            type="button"
+            onClick={ this.handleSubmit }
+            data-testid="btn-play"
+            disabled={ isDisable }
+          >
+            Play
+          </button>
+          <button
+            type="button"
+            onClick={ () => history.push('/settings') }
+            data-testid="btn-settings"
+          >
+            Settings
+          </button>
+        </form>
+      </div>
     );
   }
 }
